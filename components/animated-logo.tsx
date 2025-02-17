@@ -1,81 +1,61 @@
-"use client";
+'use client';
 
-import React, { useEffect } from "react";
-import {
-  Image,
-  Keyboard,
-  useColorScheme,
-  useWindowDimensions,
-} from "react-native";
-
-import Animated from "react-native-reanimated";
-
-import {
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from "react-native-reanimated";
-
-function useKeyboardOpen() {
-  const [keyboardOpen, setKeyboardOpen] = React.useState(false);
-  useEffect(() => {
-    const off = Keyboard.addListener("keyboardWillShow", () => {
-      setKeyboardOpen(true);
-    });
-    const off2 = Keyboard.addListener("keyboardWillHide", () => {
-      setKeyboardOpen(false);
-    });
-    return () => {
-      off.remove();
-      off2.remove();
-    };
-  }, []);
-
-  return keyboardOpen;
-}
+import * as AC from '@bacons/apple-colors';
+import React from 'react';
+import { Animated, StyleSheet, View } from 'react-native';
+import { IconSymbol } from './ui/IconSymbol';
 
 export function AnimatedLogo() {
-  const isOpen = useKeyboardOpen();
-  const translateY = useSharedValue(0);
-  const { height } = useWindowDimensions();
-  useEffect(() => {
-    translateY.value = withTiming(isOpen ? height * -0.25 : 0, {
-      duration: 200,
-    });
-  }, [isOpen, translateY, height]);
+  const [animation] = React.useState(() => new Animated.Value(0));
 
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [{ translateY: translateY.value }],
-    };
-  });
-
-  const theme = useColorScheme();
+  React.useEffect(() => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(animation, {
+          toValue: 1,
+          duration: 2000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(animation, {
+          toValue: 0,
+          duration: 2000,
+          useNativeDriver: true,
+        }),
+      ])
+    ).start();
+  }, [animation]);
 
   return (
-    <Animated.View
-      style={[
-        {
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          justifyContent: "center",
-          alignItems: "center",
-          flex: 1,
-        },
-        animatedStyle,
-      ]}
-    >
-      <Image
-        source={
-          theme === "light"
-            ? require("@/assets/images/logo.light.png")
-            : require("@/assets/images/logo.dark.png")
-        }
-        style={{ width: 128, height: 128, opacity: 0.3 }}
-      />
-    </Animated.View>
+    <View style={styles.container}>
+      <Animated.View
+        style={[
+          styles.logo,
+          {
+            transform: [
+              {
+                scale: animation.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [1, 1.1],
+                }),
+              },
+            ],
+          },
+        ]}
+      >
+        <IconSymbol name="wand.and.stars" size={32} color={AC.systemBlue} />
+      </Animated.View>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 16,
+  },
+  logo: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
