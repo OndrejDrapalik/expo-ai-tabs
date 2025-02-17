@@ -1,59 +1,28 @@
-import * as Form from "@/components/ui/Form";
-import { IconSymbol } from "@/components/ui/IconSymbol";
-import Stack from "@/components/ui/Stack";
-import TouchableBounce from "@/components/ui/TouchableBounce";
-import * as AC from "@bacons/apple-colors";
-import { Link } from "expo-router";
-import { View } from "react-native";
+import Stack from '@/components/ui/Stack';
+import React from 'react';
 
-import ThemeProvider from "@/components/ui/ThemeProvider";
-import "@/global.css";
+import ThemeProvider from '@/components/ui/ThemeProvider';
+import '@/global.css';
+
+import * as Form from '@/components/ui/Form';
+import { IconSymbol } from '@/components/ui/IconSymbol';
+import * as AC from '@bacons/apple-colors';
+
+import '@/global.css';
 
 export const unstable_settings = {
-  initialRouteName: "index",
+  initialRouteName: 'index',
 };
 
-export { ErrorBoundary } from "expo-router";
+export { ErrorBoundary } from 'expo-router';
 
-export default function Layout() {
+export default function RootLayout() {
   return (
     <ThemeProvider>
-      <Stack
-        screenOptions={{
-          title: "Expo AI",
-        }}
-      >
-        <Stack.Screen
-          name="index"
-          options={{
-            headerLargeStyle: {
-              backgroundColor: AC.systemGroupedBackground,
-            },
-            headerBlurEffect: undefined,
+      <Stack>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
 
-            headerTransparent: false,
-            headerLeft: () => (
-              <Link href="/settings" asChild>
-                <TouchableBounce sensory>
-                  <View
-                    style={[
-                      {
-                        flex: 1,
-                        paddingHorizontal: 16,
-                        paddingVertical: 8,
-                        alignItems: "center",
-                        display: "flex",
-                        marginLeft: process.env.EXPO_OS !== "web" ? -16 : 0,
-                      },
-                    ]}
-                  >
-                    <IconSymbol name="gear" color={AC.label} />
-                  </View>
-                </TouchableBounce>
-              </Link>
-            ),
-          }}
-        />
+        <Stack.Screen name="index" options={{}} />
         <Stack.Screen
           name="_debug"
           options={{
@@ -62,24 +31,24 @@ export default function Layout() {
             headerLargeStyle: {
               backgroundColor: AC.systemGroupedBackground,
             },
-            presentation: "modal",
+            presentation: 'modal',
           }}
         />
         <Stack.Screen
           name="legal/privacy"
           options={{
-            presentation: "modal",
+            presentation: 'modal',
           }}
         />
         <Stack.Screen
           name="settings"
           options={{
-            title: "Settings",
+            title: 'Settings',
             // headerLargeStyle: {
             //   backgroundColor: undefined,
             // },
             headerTransparent: true,
-            presentation: "formSheet",
+            presentation: 'modal',
             headerRight: () => (
               <Form.Link headerRight href="/" dismissTo>
                 <IconSymbol
@@ -94,7 +63,7 @@ export default function Layout() {
         <Stack.Screen
           name="movie"
           options={{
-            presentation: "modal",
+            presentation: 'modal',
             headerShown: false,
           }}
         />
