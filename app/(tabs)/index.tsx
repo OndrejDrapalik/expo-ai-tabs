@@ -1,3 +1,5 @@
+'use client';
+
 import { renderRoot } from '@/actions/render-root';
 import { AnimatedLogo } from '@/components/animated-logo';
 import { ChatContainer } from '@/components/chat-container';
