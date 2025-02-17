@@ -1,4 +1,13 @@
-# Expo AI
+# Expo AI Tabs Problem
+- How to reproduce:
+  - Introduce tabs
+  - the `settings.tsx` is is opened as `modal` instead of `fromSheet`
+    - in order to present "justify between" look in between contents of the modal
+      - the main reason in production would be to have buttons at the bottom for better UX
+
+https://github.com/user-attachments/assets/c16567f6-f729-4d9b-a62e-f6997713b646
+
+
 
 
 https://github.com/user-attachments/assets/3bb52f8e-1b3d-48cf-88dc-d38feba9a98e
